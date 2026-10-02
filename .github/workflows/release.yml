@@ -1,0 +1,30 @@
+name: Release
+
+# Push a tag such as v0.2.0 to publish that version to npm.
+# The tag must match the version in package.json (use `npm version <patch|minor|major>`).
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+  # Needed for npm trusted publishing (OIDC) and provenance.
+  id-token: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org
+      - run: npm ci
+      - run: npm test
+      - name: Check that the tag matches package.json
+        run: test "v$(node -p "require('./package.json').version")" = "$GITHUB_REF_NAME"
+      - run: npm publish --provenance --access public
+      - run: gh release create "$GITHUB_REF_NAME" --generate-notes
+        env:
+          GH_TOKEN: ${{ github.token }}

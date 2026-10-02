@@ -1,0 +1,35 @@
+name: Drift check
+
+# Once a week, check wf-graph against what EAS ships today:
+# - eas-cli: the output and flags that Validate and Run depend on.
+# - schema: the tests run against the live EAS schema, so they fail if EAS
+#   added or removed a job type or renamed a key the graph uses.
+# GitHub emails you about a failed scheduled run.
+on:
+  schedule:
+    - cron: '0 9 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  eas-cli:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - run: npm run check-eas-cli
+
+  schema:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm test

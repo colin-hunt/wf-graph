@@ -1,0 +1,19 @@
+name: Broken
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    type: build
+    needs: [does_not_exist]
+    params:
+      platform: ios
+
+  loop_a:
+    needs: [loop_b]
+    type: build
+  loop_b:
+    needs: [loop_a]
+    type: build

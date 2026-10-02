@@ -1,0 +1,28 @@
+name: Lint and report
+
+on:
+  pull_request:
+    branches: ['*']
+
+jobs:
+  lint:
+    name: Lint the app
+    runs_on: linux-medium
+    environment: development
+    env:
+      NODE_ENV: test
+    outputs:
+      summary: ${{ steps.lint.outputs.summary }}
+    steps:
+      - uses: eas/checkout
+      - uses: eas/install_node_modules
+      - id: lint
+        run: |
+          npx eslint . --format compact > lint.txt || true
+          set-output summary "$(tail -1 lint.txt)"
+
+  report:
+    after: [lint]
+    type: github-comment
+    params:
+      message: 'Lint: ${{ needs.lint.outputs.summary }}'

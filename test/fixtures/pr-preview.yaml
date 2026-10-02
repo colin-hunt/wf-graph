@@ -1,0 +1,27 @@
+name: Preview update on pull request
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+concurrency:
+  cancel_in_progress: true
+  group: ${{ workflow.filename }}-${{ github.ref }}
+
+defaults:
+  tools:
+    node: 22
+
+jobs:
+  publish:
+    type: update
+    environment: preview
+    params:
+      branch: pr-${{ github.event.pull_request.number }}
+      message: ${{ github.event.pull_request.title }}
+
+  comment:
+    needs: [publish]
+    type: github-comment
+    params:
+      message: A preview update is ready.

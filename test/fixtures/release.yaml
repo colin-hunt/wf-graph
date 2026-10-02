@@ -1,0 +1,46 @@
+name: Weekly release
+
+on:
+  schedule:
+    - cron: '0 8 * * 1'
+  workflow_dispatch: {}
+
+jobs:
+  approve:
+    type: require-approval
+
+  build_ios:
+    needs: [approve]
+    type: build
+    environment: production
+    params:
+      platform: ios
+      profile: production
+
+  build_android:
+    needs: [approve]
+    type: build
+    environment: production
+    params:
+      platform: android
+      profile: production
+
+  testflight:
+    needs: [build_ios]
+    type: testflight
+    params:
+      build_id: ${{ needs.build_ios.outputs.build_id }}
+      internal_groups: [QA]
+
+  play_store:
+    needs: [build_android]
+    type: submit
+    params:
+      build_id: ${{ needs.build_android.outputs.build_id }}
+
+  notify:
+    after: [testflight, play_store]
+    type: slack
+    params:
+      webhook_url: https://example.com/webhook
+      message: 'Release ${{ workflow.name }} finished.'

@@ -1,0 +1,81 @@
+{
+  "name": "wf-graph",
+  "version": "0.1.0",
+  "description": "Live-reloading graph and editor for EAS workflow files",
+  "keywords": [
+    "workflow",
+    "ci",
+    "yaml",
+    "eas",
+    "expo",
+    "graph",
+    "visualizer",
+    "dag"
+  ],
+  "license": "MIT",
+  "author": "Colin Hunt",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/colin-hunt/wf-graph.git"
+  },
+  "homepage": "https://github.com/colin-hunt/wf-graph#readme",
+  "bugs": {
+    "url": "https://github.com/colin-hunt/wf-graph/issues"
+  },
+  "type": "module",
+  "bin": {
+    "wf-graph": "dist/cli.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=20.19"
+  },
+  "scripts": {
+    "build": "vite build && tsup",
+    "dev": "vite",
+    "start": "node dist/cli.js",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "prepare": "npm run build",
+    "check-eas-cli": "node scripts/check-eas-cli.mjs"
+  },
+  "dependencies": {
+    "ajv": "^8.20.0",
+    "ajv-formats": "^3.0.1",
+    "chokidar": "^5.0.0",
+    "open": "^11.0.4",
+    "yaml": "^2.9.1"
+  },
+  "devDependencies": {
+    "@codemirror/autocomplete": "^6.20.3",
+    "@codemirror/commands": "^6.11.1",
+    "@codemirror/lang-yaml": "^6.1.3",
+    "@codemirror/language": "^6.12.4",
+    "@codemirror/lint": "^6.9.7",
+    "@codemirror/state": "^6.7.6",
+    "@codemirror/view": "^6.43.13",
+    "@dagrejs/dagre": "^3.1.1",
+    "@fontsource-variable/inter": "^5.3.0",
+    "@lezer/common": "^1.5.3",
+    "@lezer/highlight": "^1.2.5",
+    "@radix-ui/colors": "^3.0.0",
+    "@types/node": "^26.6.3",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.1.1",
+    "@xyflow/react": "^12.12.0",
+    "codemirror": "^6.0.2",
+    "codemirror-json-schema": "^0.8.1",
+    "lucide-react": "^1.48.0",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "tsup": "^8.5.1",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.1",
+    "vitest": "^5.0.2"
+  }
+}
