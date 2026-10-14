@@ -183,7 +183,13 @@ function getEasVersion(cwd: string) {
 function runEas(args: string[], cwd: string, timeoutMs: number, env: Record<string, string> = {}): Promise<{ code: number; stdout: string; stderr: string }> {
   const [cmd, ...pre] = easCommand();
   return new Promise((ok) => {
-    const child = spawn(cmd, [...pre, ...args], { cwd, env: { ...process.env, FORCE_COLOR: '0', NO_COLOR: '1', ...env } });
+    // stdin must be closed: `eas workflow:run` reads inputs from stdin until it ends
+    // when stdin is not a TTY, so an open pipe makes it wait until the timeout.
+    const child = spawn(cmd, [...pre, ...args], {
+      cwd,
+      stdio: ['ignore', 'pipe', 'pipe'],
+      env: { ...process.env, FORCE_COLOR: '0', NO_COLOR: '1', ...env },
+    });
     let stdout = '';
     let stderr = '';
     child.stdout.on('data', (d) => (stdout += d));
