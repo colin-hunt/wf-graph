@@ -1,4 +1,5 @@
 import {
+  Bot,
   CircleAlert,
   CircleArrowOutDownRight,
   CloudUpload,
@@ -27,6 +28,7 @@ import {
  * live EAS schema, on every CI build and once a week.
  */
 export const EAS_JOB_ICONS: Record<string, LucideIcon> = {
+  agent: Bot,
   build: Hammer,
   custom: SquareTerminal,
   deploy: Globe,
