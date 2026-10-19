@@ -2,7 +2,7 @@
 
 A local, live-reloading graph and editor for EAS workflow files (`.eas/workflows`). The graph uses the same visual style as the workflow graph on expo.dev.
 
-> Early release (0.1). Not an official Expo product. The **Run workflow** button starts real EAS jobs, which can use your EAS build credits. It has not yet been tested end to end on a real project.
+> Early release (0.1). Not an official Expo product. The **Run workflow** button starts real EAS jobs, which can use your EAS build credits.
 
 ## Install
 
