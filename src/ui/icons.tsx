@@ -1,4 +1,5 @@
 import {
+  AppWindow,
   Bot,
   CircleAlert,
   CircleArrowOutDownRight,
@@ -7,6 +8,7 @@ import {
   FingerprintPattern,
   FlaskConical,
   GitBranchMinus,
+  GitPullRequest,
   Globe,
   Hammer,
   Mail,
@@ -30,6 +32,7 @@ import {
  */
 export const EAS_JOB_ICONS: Record<string, LucideIcon> = {
   agent: Bot,
+  appdrop: AppWindow,
   build: Hammer,
   custom: SquareTerminal,
   deploy: Globe,
@@ -47,6 +50,7 @@ export const EAS_JOB_ICONS: Record<string, LucideIcon> = {
   email: Mail,
   repack: PackageOpen,
   'github-comment': MessageSquareText,
+  'github-pull-request': GitPullRequest,
   'branch-delete': GitBranchMinus,
   'update-rollout': Waypoints,
 };
